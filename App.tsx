@@ -6,9 +6,12 @@ import Topbar from './components/UI/Topbar/Topbar';
 import AllCardsContainer from './components/views/AllCardsContainer/AllCardsContainer';
 import CardDetails from './components/views/CardDetails/CardDetails';
 import FavoriteCardsContainer from './components/views/FavoriteCardsContainer/FavoriteCardsContainer';
+import { IPost } from './components/UI/Card/Card';
+import { makeAutoObservable } from 'mobx';
+import store from './store/store';
+
 
 export default function App() {
-
   return (
     <View>
 
@@ -17,9 +20,11 @@ export default function App() {
       <ScrollView >
         <View style={styles.wrapper}>
           <View style={styles.container}>
-            <AllCardsContainer />
+
+            <AllCardsContainer store={store} />
             <CardDetails />
-            <FavoriteCardsContainer />
+            <FavoriteCardsContainer store={store} />
+
           </View>
         </View>
       </ScrollView>
@@ -40,3 +45,4 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
   }
 });
+

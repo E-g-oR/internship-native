@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { IPost } from "../../UI/Card/Card";
 
-const CardDetails: React.FC<{ post: IPost }> = ({ post }) => {
+const CardDetails: React.FC = () => {
 	return (
 		<View style={styles.CardDetails} >
 			<Text>CardDetails</Text>

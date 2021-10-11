@@ -2,38 +2,30 @@ import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import Post, { IPost } from "../../UI/Card/Card";
+import { observer } from 'mobx-react'
+import { IStore, PostsStore } from "../../../store/store";
 
-const AllCardsContainer = () => {
-	const [fetching, setFetching] = useState(true)
-	const [posts, setPosts] = useState<IPost[]>([])
+const AllCardsContainer: React.FC<{ store: PostsStore }> = observer(({ store }) => {
 
-	const putPosts = (data: IPost[]) => {
-		setPosts((prev: IPost[]) => prev = data)
-		console.log(posts);
-	}
-	const requestPosts = async () => {
-		const RESP = await fetch('https://jsonplaceholder.typicode.com/posts')
-		const DATA = await RESP.json()
-		putPosts(DATA)
-		setFetching(false)
-	}
 	useEffect(() => {
-		requestPosts()
-	}, [fetching])
+		if (!store.allPosts.length) {
+			store.getPosts()
+		}
+	}, [store])
+
 	return (
 		<View style={styles.AllCardsContainer}>
-			{posts
+			{store.allPosts.length
 				?
 				<ScrollView>
-					{posts.map(post =>
+					{store.allPosts.map(post =>
 						<Post key={post.id} post={post} />
 					)}
 				</ScrollView>
-
 				: <ActivityIndicator />}
 		</View>
 	)
-}
+})
 
 export default AllCardsContainer
 

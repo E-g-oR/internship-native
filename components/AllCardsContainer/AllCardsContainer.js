@@ -1,19 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import Post from "../Card/Card";
 
 const AllCardsContainer = () => {
+	const [fetching, setFetching] = useState(true)
+	const [posts, setPosts] = useState(null)
+	const putPosts = (data) => {
+		setPosts(prev => prev = data)
+		console.log(posts);
+	}
+	const requestPosts = async () => {
+		const RESP = await fetch('https://jsonplaceholder.typicode.com/posts')
+		const DATA = await RESP.json()
+		putPosts(DATA)
+		setFetching(false)
+	}
+	useEffect(() => {
+		requestPosts()
+	}, [fetching])
 	return (
-		<ScrollView style={styles.AllCardsContainer}>
-			<ActivityIndicator />
-			<View>
-				<Post title="Hello motherf*cker" body="Here's some text for body of test post" />
-				<Post title="Hello motherf*cker" body="Here's some text for body of test post" />
-				<Post title="Hello motherf*cker" body="Here's some text for body of test post" />
-				<Post title="Hello motherf*cker" body="Here's some text for body of test post" />
-			</View>
-		</ScrollView>
+		<View style={styles.AllCardsContainer}>
+			{posts
+				?
+				<ScrollView>
+					{posts.map(post =>
+						<Post
+							key={post.id}
+							title={post.title}
+							body={post.body}
+						/>
+					)}
+				</ScrollView>
+
+				: <ActivityIndicator />}
+		</View>
 	)
 }
 
@@ -21,7 +42,7 @@ export default AllCardsContainer
 
 const styles = StyleSheet.create({
 	AllCardsContainer: {
-		height: '70%',
+		height: 350,
 		borderColor: '#ef5350',
 		borderWidth: 2,
 		paddingVertical: 7

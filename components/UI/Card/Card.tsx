@@ -2,14 +2,21 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Card, Button, Paragraph, Title, TouchableRipple } from "react-native-paper";
 
-const Post = ({ title, body }) => {
+export interface IPost {
+	title: string,
+	body: string,
+	userId: number,
+	id: number
+}
+
+const Post: React.FC<{ post: IPost }> = ({ post }) => {
 	return (
 
 		<Card style={styles.Post}>
 			<Card.Content>
 
-				<Title>{title}</Title>
-				<Paragraph>{body}</Paragraph>
+				<Title>{post.title}</Title>
+				<Paragraph>{post.body}</Paragraph>
 
 			</Card.Content>
 			<Card.Actions>

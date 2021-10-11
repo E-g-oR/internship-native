@@ -1,7 +1,8 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { IPost } from "../../UI/Card/Card";
 
-const FavoriteCardsContainer = () => {
+const FavoriteCardsContainer: React.FC = () => {
 	return (
 		<View style={styles.FavoriteCardsContainer}>
 			<Text>FavoriteCardsContainer</Text>

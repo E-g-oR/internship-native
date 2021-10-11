@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import Post from "../Card/Card";
+import Post, { IPost } from "../../UI/Card/Card";
 
 const AllCardsContainer = () => {
 	const [fetching, setFetching] = useState(true)
-	const [posts, setPosts] = useState(null)
-	const putPosts = (data) => {
-		setPosts(prev => prev = data)
+	const [posts, setPosts] = useState<IPost[]>([])
+
+	const putPosts = (data: IPost[]) => {
+		setPosts((prev: IPost[]) => prev = data)
 		console.log(posts);
 	}
 	const requestPosts = async () => {
@@ -25,11 +26,7 @@ const AllCardsContainer = () => {
 				?
 				<ScrollView>
 					{posts.map(post =>
-						<Post
-							key={post.id}
-							title={post.title}
-							body={post.body}
-						/>
+						<Post key={post.id} post={post} />
 					)}
 				</ScrollView>
 

@@ -1,29 +1,18 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { Card, Paragraph, Title, Button, TouchableRipple, Appbar } from 'react-native-paper';
-import BottomNav from './components/BottomNavigation/BottomNavigation';
-
-import AllCardsContainer from './components/AllCardsContainer/AllCardsContainer'
-import CardDetails from './components/CardDetails/CardDetails'
-import FavoriteCardsContainer from './components/FavoriteCardsContainer/FavoriteCardsContainer'
-import Post from './components/Card/Card';
+import Topbar from './components/UI/Topbar/Topbar';
+import AllCardsContainer from './components/views/AllCardsContainer/AllCardsContainer';
+import CardDetails from './components/views/CardDetails/CardDetails';
+import FavoriteCardsContainer from './components/views/FavoriteCardsContainer/FavoriteCardsContainer';
 
 export default function App() {
-  const [count, setCount] = useState(0)
-  const increment = () => {
-    setCount(prev => prev + 1)
-  }
+
   return (
     <View>
 
-      <Appbar.Header style={styles.appbar} dark >
-        <Appbar.BackAction />
-        <Appbar.Content title="My first native app" subtitle="Hello, world!" />
-        <Appbar.Action icon="magnify" />
-        <Appbar.Action icon="dots-vertical" />
-      </Appbar.Header>
+      <Topbar />
 
       <ScrollView >
         <View style={styles.wrapper}>
@@ -31,13 +20,13 @@ export default function App() {
             <AllCardsContainer />
             <CardDetails />
             <FavoriteCardsContainer />
-            {/* <BottomNav /> */}
           </View>
         </View>
       </ScrollView>
-      <StatusBar style="auto" />
-    </View>
 
+      <StatusBar style="auto" />
+
+    </View>
   );
 }
 

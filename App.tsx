@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
@@ -6,18 +6,25 @@ import Topbar from './components/UI/Topbar/Topbar';
 import AllCardsContainer from './components/views/AllCardsContainer/AllCardsContainer';
 import CardDetails from './components/views/CardDetails/CardDetails';
 import FavoriteCardsContainer from './components/views/FavoriteCardsContainer/FavoriteCardsContainer';
-import { IPost } from './components/UI/Card/Card';
-import { makeAutoObservable } from 'mobx';
 import store from './store/store';
+import { FAB } from 'react-native-paper';
+import FormCreatePost from './components/UI/FormCreatePost/FormCreatePost';
+import storeForm from './store/FormStore';
+import { shouldCompute } from 'mobx/dist/internal';
 
 
-export default function App() {
+const App: React.FC = () => {
+
+  const showForm = () => {
+    storeForm.toggleForm()
+  }
+
   return (
-    <View>
+    <View style={{ height: '100%' }} >
 
       <Topbar />
 
-      <ScrollView >
+      <ScrollView>
         <View style={styles.wrapper}>
           <View style={styles.container}>
 
@@ -27,10 +34,13 @@ export default function App() {
 
           </View>
         </View>
+
       </ScrollView>
 
-      <StatusBar style="auto" />
+      <FAB onPress={showForm} style={styles.fab} icon="plus" />
+      <FormCreatePost storeForm={storeForm} />
 
+      <StatusBar style="auto" />
     </View>
   );
 }
@@ -43,6 +53,13 @@ const styles = StyleSheet.create({
   container: {
     width: "90%",
     // borderWidth: 2,
-  }
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
 });
 
+export default App;

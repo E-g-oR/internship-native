@@ -19,7 +19,7 @@ const AllCardsContainer: React.FC<{ store: PostsStore }> = observer(({ store }) 
 				?
 				<ScrollView>
 					{store.allPosts.map(post =>
-						<Post key={post.id} post={post} />
+						<Post key={post.id} post={post} store={store} />
 					)}
 				</ScrollView>
 				: <ActivityIndicator />}

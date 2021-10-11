@@ -9,7 +9,7 @@ const FavoriteCardsContainer: React.FC<{ store: PostsStore }> = observer(({ stor
 		<View style={styles.FavoriteCardsContainer}>
 			<ScrollView>
 				{store.allPosts.map(post => post.isFavorite ?
-					<Post post={post} key={post.id} />
+					<Post post={post} key={post.id} store={store} />
 					: null)}
 			</ScrollView>
 		</View >

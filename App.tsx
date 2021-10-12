@@ -7,10 +7,9 @@ import AllCardsContainer from './components/views/AllCardsContainer/AllCardsCont
 import CardDetails from './components/views/CardDetails/CardDetails';
 import FavoriteCardsContainer from './components/views/FavoriteCardsContainer/FavoriteCardsContainer';
 import store from './store/store';
-import { FAB } from 'react-native-paper';
+import { FAB, Provider, Surface } from 'react-native-paper';
 import FormCreatePost from './components/UI/FormCreatePost/FormCreatePost';
 import storeForm from './store/FormStore';
-import { shouldCompute } from 'mobx/dist/internal';
 
 
 const App: React.FC = () => {
@@ -20,28 +19,30 @@ const App: React.FC = () => {
   }
 
   return (
-    <View style={{ height: '100%' }} >
+    <Provider>
+      <Surface style={{ height: '100%' }} >
 
-      <Topbar />
+        <Topbar />
 
-      <ScrollView>
-        <View style={styles.wrapper}>
-          <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.wrapper}>
+            <View style={styles.container}>
 
-            <AllCardsContainer store={store} />
-            <CardDetails />
-            <FavoriteCardsContainer store={store} />
+              <AllCardsContainer store={store} />
+              <CardDetails />
+              <FavoriteCardsContainer store={store} />
 
+            </View>
           </View>
-        </View>
 
-      </ScrollView>
+        </ScrollView>
 
-      <FAB onPress={showForm} style={styles.fab} icon="plus" />
-      <FormCreatePost storeForm={storeForm} />
+        <FAB onPress={showForm} style={styles.fab} icon="plus" />
+        <FormCreatePost storeForm={storeForm} />
 
-      <StatusBar style="auto" />
-    </View>
+        <StatusBar style="auto" />
+      </Surface>
+    </Provider>
   );
 }
 

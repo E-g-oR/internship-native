@@ -28,7 +28,6 @@ const FormCreatePost: React.FC<{ storeForm: FormStore }> = observer(({ storeForm
         </Portal>
       </View>
     </Provider>
-
   )
 })
 

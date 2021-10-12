@@ -23,8 +23,8 @@ const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, sto
 		<Card style={[styles.Post, post.isFavorite ? styles.favorite : null]} elevation={4}>
 
 			<Card.Content>
-				<Title>{post.title}</Title>
-				<Paragraph>{post.body}</Paragraph>
+				<Title style={post.isFavorite ? styles.favoriteText : null}>{post.title}</Title>
+				<Paragraph style={post.isFavorite ? styles.favoriteText : null}>{post.body}</Paragraph>
 			</Card.Content>
 
 			<Card.Actions>
@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
 		marginHorizontal: 10
 	},
 	favorite: {
-		backgroundColor: '#ffecb3'
+		backgroundColor: '#ffecb3',
+	},
+	favoriteText: {
+		color: '#000'
 	}
 });

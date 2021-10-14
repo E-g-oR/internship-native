@@ -38,7 +38,7 @@ const App: React.FC = () => {
         </ScrollView>
 
         <FAB onPress={showForm} style={styles.fab} icon="plus" />
-        <FormCreatePost storeForm={storeForm} />
+        <FormCreatePost storeForm={storeForm} store={store} />
 
         <StatusBar style="auto" />
       </Surface>

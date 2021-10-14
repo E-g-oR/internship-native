@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { BottomNavigation, Text } from "react-native-paper";
 
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import AllCardsContainer from "../../views/AllCardsContainer/AllCardsContainer";
+
+const Tab = createMaterialBottomTabNavigator();
+
 const MusicRoute = () => <Text>Music</Text>;
 
 const AlbumsRoute = () => <Text>Albums</Text>;
@@ -21,10 +26,10 @@ const BottomNav = () => {
 		recents: RecentsRoute,
 	});
 	return (
-		<BottomNavigation
-			navigationState={{ index, routes }}
-			onIndexChange={setIndex}
-			renderScene={renderScene} />
+		<Tab.Navigator>
+			<Tab.Screen name="Home" component={AllCardsContainer} />
+			<Tab.Screen name="Settings" component={AllCardsContainer} />
+		</Tab.Navigator>
 	)
 }
 

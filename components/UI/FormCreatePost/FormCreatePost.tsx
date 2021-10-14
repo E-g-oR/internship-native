@@ -1,14 +1,44 @@
 import { observer } from "mobx-react";
 import React from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 import { Button, Dialog, Paragraph, Portal, Provider, Text, TextInput } from "react-native-paper";
 import { FormStore } from "../../../store/FormStore";
+import { PostsStore } from "../../../store/store";
+import { IPost } from "../Card/Card";
 
-const FormCreatePost: React.FC<{ storeForm: FormStore }> = observer(({ storeForm }) => {
+type FormData = {
+  title: string,
+  body: string
+}
+
+const createPost = (formData: FormData) => {
+  const date = Date.now()
+  const userId = 0
+  return {
+    ...formData,
+    id: date,
+    userId: userId,
+    isFavorite: false
+  }
+}
+
+const FormCreatePost: React.FC<{ storeForm: FormStore, store: PostsStore }> = observer(({ storeForm, store }) => {
+
+  const { control, handleSubmit, formState: { errors }, reset } = useForm();
 
   const closeForm = (): void => {
     storeForm.toggleForm()
+    reset()
   }
+
+  const submit = (data: FormData) => {
+    console.log(createPost(data));
+    store.addNewPost(createPost(data))
+    closeForm()
+  }
+
+
 
   return (
     <Provider>
@@ -17,11 +47,44 @@ const FormCreatePost: React.FC<{ storeForm: FormStore }> = observer(({ storeForm
           <Dialog visible={storeForm.isOpen} onDismiss={closeForm}>
             <Dialog.Title>Create new post</Dialog.Title>
             <Dialog.Content>
-              <TextInput label="Post title" mode='outlined' />
-              <TextInput style={styles.inputBody} label="Post body" mode='outlined' multiline />
+              <Controller
+                name="title"
+                control={control}
+                rules={{ required: { value: true, message: 'Please fill this' } }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    error={!!errors.title}
+                    label="Post title"
+                    mode='outlined'
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+              />
+
+              <Controller
+                name="body"
+                control={control}
+                rules={{ required: { value: true, message: 'Please fill this' } }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    error={!!errors.body}
+                    style={styles.inputBody}
+                    label="Post body"
+                    mode='outlined'
+                    multiline
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+              />
+
+
             </Dialog.Content>
             <Dialog.Actions>
-              <Button mode="contained" >Add post</Button>
+              <Button mode="contained" onPress={handleSubmit(submit)} >Add post</Button>
               <Button mode="outlined" onPress={closeForm} >Cancel</Button>
             </Dialog.Actions>
           </Dialog>

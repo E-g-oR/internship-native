@@ -2,14 +2,17 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import Topbar from './components/UI/Topbar/Topbar';
-import AllCardsContainer from './components/views/AllCardsContainer/AllCardsContainer';
-import CardDetails from './components/views/CardDetails/CardDetails';
-import FavoriteCardsContainer from './components/views/FavoriteCardsContainer/FavoriteCardsContainer';
-import store from './store/store';
+import Topbar from './src/components/UI/Topbar/Topbar';
+import AllCardsContainer from './src/components/views/AllCardsContainer/AllCardsContainer';
+import CardDetails from './src/components/views/CardDetails/CardDetails';
+import FavoriteCardsContainer from './src/components/views/FavoriteCardsContainer/FavoriteCardsContainer';
+import store from './src/store/store';
 import { FAB, Provider, Surface } from 'react-native-paper';
-import FormCreatePost from './components/UI/FormCreatePost/FormCreatePost';
-import storeForm from './store/FormStore';
+import FormCreatePost from './src/components/UI/FormCreatePost/FormCreatePost';
+import storeForm from './src/store/FormStore';
+import Navigate from './src/navigation/navigate';
+import { NavigationContainer } from '@react-navigation/native';
+import MyTabs from './src/navigation/TabNavigation';
 
 
 const App: React.FC = () => {
@@ -20,28 +23,16 @@ const App: React.FC = () => {
 
   return (
     <Provider>
-      <Surface style={{ height: '100%' }} >
+      <NavigationContainer>
+        <Surface style={{ height: '100%' }} >
 
-        <Topbar />
+          <FAB onPress={showForm} style={styles.fab} icon="plus" />
+          <MyTabs />
 
-        <ScrollView>
-          <View style={styles.wrapper}>
-            <View style={styles.container}>
-
-              <AllCardsContainer store={store} />
-              <CardDetails />
-              <FavoriteCardsContainer store={store} />
-
-            </View>
-          </View>
-
-        </ScrollView>
-
-        <FAB onPress={showForm} style={styles.fab} icon="plus" />
-        <FormCreatePost storeForm={storeForm} store={store} />
-
-        <StatusBar style="auto" />
-      </Surface>
+          <StatusBar style="auto" />
+        </Surface>
+      </NavigationContainer>
+      <FormCreatePost storeForm={storeForm} store={store} />
     </Provider>
   );
 }
@@ -58,8 +49,10 @@ const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
     margin: 16,
+    marginBottom: 70,
     right: 0,
     bottom: 0,
+    zIndex: 20
   },
 });
 

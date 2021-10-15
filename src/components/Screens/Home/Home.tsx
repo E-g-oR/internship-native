@@ -1,18 +1,22 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import Feed from "./Feed";
 import Info from "./Info";
 import { Surface } from "react-native-paper";
 import { View } from "react-native";
+import Topbar from "../../UI/Topbar/Topbar";
+import { RootStackParamList } from "../../../navigation/TabNavigation";
 
 const Stack = createNativeStackNavigator()
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 
-const HomeScreen = () => {
+const HomeScreen = ({ route, navigation }: Props) => {
   return (
-    <Surface style={{ height: '100%' }}>
-      <Navigate />
-    </Surface>
-
+    <>
+      <Surface style={{ height: '100%' }}>
+        <Navigate />
+      </Surface>
+    </>
   )
 }
 
@@ -21,6 +25,8 @@ function Navigate() {
   return (
     <Stack.Navigator
       screenOptions={{
+        headerShown: false,
+        animation: 'fade',
         headerStyle: {
           backgroundColor: 'rgb(98, 0, 238)',
         },

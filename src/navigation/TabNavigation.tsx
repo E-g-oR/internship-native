@@ -9,7 +9,8 @@ import { IPost } from "../components/UI/Card/Card";
 export type RootStackParamList = {
   Home: undefined,
   Favorites: undefined,
-  Info: { post: IPost }
+  Info: { post: IPost },
+  Feed: undefined
 }
 
 const Tab = createMaterialBottomTabNavigator<RootStackParamList>()

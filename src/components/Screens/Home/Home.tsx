@@ -1,21 +1,34 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
-import { Button, FAB, Surface, Text } from "react-native-paper";
-import AllCardsContainer from "../../views/AllCardsContainer/AllCardsContainer";
-import store from "../../../store/store";
-import { useNavigation } from "@react-navigation/native";
-import Topbar from "../../UI/Topbar/Topbar";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Feed from "./Feed";
+import Info from "./Info";
+import { Surface } from "react-native-paper";
+import { View } from "react-native";
 
+const Stack = createNativeStackNavigator()
 
 const HomeScreen = () => {
-
   return (
-    <>
-      <Topbar goBack={false} title="Home screen" subtitle="All posts" />
-      <ScrollView>
-        <AllCardsContainer store={store} />
-      </ScrollView>
-    </>
+    <Surface style={{ height: '100%' }}>
+      <Navigate />
+    </Surface>
+
+  )
+}
+
+
+function Navigate() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: 'rgb(98, 0, 238)',
+        },
+        headerTintColor: '#fff'
+      }}>
+      <Stack.Screen name="Feed" component={Feed} />
+      <Stack.Screen name="Info" component={Info} />
+    </Stack.Navigator >
   )
 }
 

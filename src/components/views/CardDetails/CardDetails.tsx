@@ -1,11 +1,14 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { IPost } from "../../UI/Card/Card";
+import { Paragraph, Title, TouchableRipple } from "react-native-paper";
+import store from "../../../store/store";
+import Post, { IPost } from "../../UI/Card/Card";
 
-const CardDetails: React.FC = () => {
+const CardDetails: React.FC<{ post: IPost }> = ({ post }) => {
 	return (
 		<View style={styles.CardDetails} >
-			<Text>CardDetails</Text>
+			<Title>{post.title}</Title>
+			<Paragraph>{post.body}</Paragraph>
 		</View>
 	)
 }

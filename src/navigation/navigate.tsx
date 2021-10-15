@@ -10,57 +10,55 @@ const Stack = createNativeStackNavigator()
 
 const Navigate = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{
-        headerStyle: {
+    <Stack.Navigator screenOptions={{
+      headerStyle: {
 
-        }
-      }} >
+      }
+    }} >
 
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            title: 'My home',
-            headerStyle: {
-              backgroundColor: '#f4511e',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          }} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          title: 'My home',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
 
-        <Stack.Screen
-          name="Favorites"
-          component={FavoritesScreen}
-          options={{
-            title: 'My home',
-            headerStyle: {
-              backgroundColor: '#f4511e',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          }} />
+      <Stack.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          title: 'My home',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
 
-        <Stack.Screen
-          name="PostInfo"
-          component={PostInfoScreen}
-          options={{
-            title: 'My home',
-            headerStyle: {
-              backgroundColor: '#f4511e',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          }} />
+      <Stack.Screen
+        name="PostInfo"
+        component={PostInfoScreen}
+        options={{
+          title: 'My home',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
 
-      </Stack.Navigator>
-    </NavigationContainer>
+    </Stack.Navigator>
   )
 }
 export default Navigate

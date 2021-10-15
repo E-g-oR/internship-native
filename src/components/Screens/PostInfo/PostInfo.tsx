@@ -1,13 +1,27 @@
+import { MaterialBottomTabScreenProps } from "@react-navigation/material-bottom-tabs";
 import React from "react";
-import { View } from "react-native";
-import { Text } from "react-native-paper";
+import { ScrollView, View } from "react-native";
+import { Text, Title } from "react-native-paper";
+import { RootStackParamList } from "../../../navigation/TabNavigation";
+import { IPost } from "../../UI/Card/Card";
+import Topbar from "../../UI/Topbar/Topbar";
+import CardDetails from "../../views/CardDetails/CardDetails";
 
-const PostInfoScreen = () => {
-  return (
-    <View>
+
+type Props = MaterialBottomTabScreenProps<RootStackParamList, 'PostInfo'>
+const PostInfoScreen = ({ route, navigation }: Props) => {
+  return (<>
+    <Topbar goBack={true} title="Post Info Screen" subtitle="Information of specific post" />
+    <ScrollView>
       <Text>Post Info Screen</Text>
-    </View>
-  )
+      <CardDetails post={route.params.post} />
+    </ScrollView>
+  </>)
 }
 
 export default PostInfoScreen
+
+// ?
+// ?
+// ?
+//?

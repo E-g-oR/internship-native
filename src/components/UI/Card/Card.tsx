@@ -4,6 +4,7 @@ import { Card, Button, Paragraph, Title, TouchableRipple } from "react-native-pa
 import { MaterialIcons } from '@expo/vector-icons';
 import { observer } from "mobx-react/node_modules/mobx-react-lite";
 import { PostsStore } from "../../../store/store";
+import { useNavigation } from "@react-navigation/native";
 
 export interface IPost {
 	title: string,
@@ -14,19 +15,21 @@ export interface IPost {
 }
 
 const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, store }) => {
-
+	const navigation = useNavigation()
 	const togglePost = (): void => {
 		store.togglePost(post.id)
 	}
 
 	return (
 		<Card style={[styles.Post, post.isFavorite ? styles.favorite : null]} elevation={4}>
-
-			<Card.Content>
-				<Title style={post.isFavorite ? styles.favoriteText : null}>{post.title}</Title>
-				<Paragraph style={post.isFavorite ? styles.favoriteText : null}>{post.body}</Paragraph>
-			</Card.Content>
-
+			<TouchableRipple onPress={() => {
+				navigation.navigate('Info', { post })
+			}}>
+				<Card.Content>
+					<Title style={post.isFavorite ? styles.favoriteText : null}>{post.title}</Title>
+					<Paragraph style={post.isFavorite ? styles.favoriteText : null}>{post.body}</Paragraph>
+				</Card.Content>
+			</TouchableRipple>
 			<Card.Actions>
 
 				<Button

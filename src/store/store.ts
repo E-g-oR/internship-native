@@ -1,5 +1,6 @@
 import { IPost } from "../components/UI/Card/Card";
 import { makeAutoObservable } from "mobx";
+import storage from "./localStorage";
 
 export interface IStore {
   allPosts: IPost[];
@@ -11,6 +12,7 @@ export interface IStore {
 
 export class PostsStore {
   allPosts: IPost[] = [];
+  addedPosts: IPost[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -20,10 +22,27 @@ export class PostsStore {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((resp) => resp.json())
       .then((data: IPost[]) => this.putPosts(data));
+
+    storage
+      .load({
+        key: "addedPosts",
+        id: "1"
+      })
+      .then((arr: IPost[]) => {
+        if (arr.length) {
+          this.putPostsFromStorage(arr);
+        }
+      }).catch(err => console.log(err))
   }
 
   putPosts(data: IPost[]) {
     this.allPosts = data;
+  }
+
+  putPostsFromStorage(data: IPost[]) {
+    data.forEach((post: IPost) => {
+      this.allPosts.unshift(post);
+    })
   }
 
   togglePost(id: number) {
@@ -33,9 +52,14 @@ export class PostsStore {
   }
 
   addNewPost(newPost: IPost) {
-    if (this.allPosts.length) {
-      this.allPosts.unshift(newPost);
-    }
+    this.allPosts.unshift(newPost);
+    this.addedPosts.unshift(newPost);
+    storage.save({
+      key: "addedPosts",
+      id: "1",
+      data: this.addedPosts,
+      expires: 50000
+    })
   }
 }
 

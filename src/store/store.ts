@@ -36,7 +36,13 @@ export class PostsStore {
   }
 
   putPosts(data: IPost[]) {
-    this.allPosts = data;
+    if (!this.allPosts.length) {
+      this.allPosts = data;
+    } else {
+      const existing: IPost[] = this.allPosts
+      this.allPosts = data
+      this.putPostsFromStorage(existing)
+    }
   }
 
   putPostsFromStorage(data: IPost[]) {

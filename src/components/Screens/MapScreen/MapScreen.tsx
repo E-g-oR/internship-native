@@ -8,18 +8,18 @@ import Topbar from "../../UI/Topbar/Topbar";
 import CardDetails from "../../views/CardDetails/CardDetails";
 
 
-type Props = MaterialBottomTabScreenProps<RootStackParamList, 'Info'>
-const PostInfoScreen = ({ route, navigation }: Props) => {
-  return (<>
-    <Topbar goBack={true} title="Post Info Screen" subtitle="Information of specific post" />
-    <ScrollView>
-      <Text>Post Info Screen</Text>
-      <CardDetails post={route.params.post} />
-    </ScrollView>
-  </>)
+type Props = MaterialBottomTabScreenProps<RootStackParamList, 'MapScreen'>
+const MapScreen = ({ route, navigation }: Props) => {
+	return (<>
+		<Topbar goBack={true} title="Post Info Screen" subtitle="Information of specific post" />
+		<ScrollView>
+			<Text>Post Info Screen</Text>
+			<CardDetails post={route.params.post} />
+		</ScrollView>
+	</>)
 }
 
-export default PostInfoScreen
+export default MapScreen
 
 // ?
 // ?

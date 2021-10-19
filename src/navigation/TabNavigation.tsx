@@ -10,7 +10,8 @@ export type RootStackParamList = {
   Home: undefined,
   Favorites: undefined,
   Info: { post: IPost },
-  Feed: undefined
+  Feed: undefined,
+  MapScreen: undefined,
 }
 
 const Tab = createMaterialBottomTabNavigator<RootStackParamList>()

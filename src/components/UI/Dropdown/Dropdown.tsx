@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
 import { Button, Divider, IconButton, Menu, Surface, TouchableRipple } from 'react-native-paper'
 import tw from 'twrnc'
+import { IStore, PostsStore } from '../../../store/store'
 
-const Dropdown = () => {
+const Dropdown: React.FC<{ store: PostsStore }> = ({ store }) => {
   const [opened, setOpened] = useState(false)
   const [value, setValue] = useState('Please, select the country')
   const closeMenu = () => {
@@ -25,30 +27,12 @@ const Dropdown = () => {
       </TouchableOpacity>
       <Surface style={styles.menu} >
         <ScrollView style={{ maxHeight: 220 }}>
-          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
-            <Text>some text here</Text>
-          </TouchableRipple>
-          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
-            <Text>some text here</Text>
-          </TouchableRipple>
-          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
-            <Text>some text here</Text>
-          </TouchableRipple>
-          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
-            <Text>some text here</Text>
-          </TouchableRipple>
-          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
-            <Text>some text here</Text>
-          </TouchableRipple>
-          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
-            <Text>some text here</Text>
-          </TouchableRipple>
-          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
-            <Text>some text here</Text>
-          </TouchableRipple>
-          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
-            <Text>some text here</Text>
-          </TouchableRipple>
+          {store.countriesList.length && (store.countriesList.map(country => (
+            <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
+              <Text>{country}</Text>
+            </TouchableRipple>)
+          )
+          )}
         </ScrollView>
       </Surface>
     </View>

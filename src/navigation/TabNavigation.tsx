@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import HomeScreen from "../components/Screens/Home/Home";
 import FavoritesScreen from "../components/Screens/Favorites/Favorites";
 import { IPost } from "../components/UI/Card/Card";
+import MapScreen from "../components/Screens/MapScreen/MapScreen";
 
 export type RootStackParamList = {
   Home: undefined,
@@ -45,6 +46,17 @@ const MyTabs = () => {
             tabBarLabel: 'Favorites',
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="heart" color={color} size={26} />
+            )
+          }}
+        />
+
+        <Tab.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            tabBarLabel: 'Map',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="map" color={color} size={26} />
             )
           }}
         />

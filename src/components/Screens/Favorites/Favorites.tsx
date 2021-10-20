@@ -8,7 +8,7 @@ import FavoriteCardsContainer from "../../views/FavoriteCardsContainer/FavoriteC
 const FavoritesScreen = () => {
   return (
     <>
-      <Topbar goBack={true} title="Favorites" subtitle="you can see your favorite posts here" />
+      <Topbar goBack={false} title="Favorites" subtitle="you can see your favorite posts here" />
       <ScrollView>
         <FavoriteCardsContainer store={store} />
       </ScrollView>

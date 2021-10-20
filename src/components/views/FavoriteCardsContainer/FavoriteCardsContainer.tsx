@@ -1,5 +1,5 @@
-import { observer } from "mobx-react/node_modules/mobx-react-lite";
 import React from "react";
+import { observer } from "mobx-react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { Surface } from "react-native-paper";
 import { PostsStore } from "../../../store/store";

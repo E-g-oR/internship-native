@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Button, Divider, IconButton, Menu } from 'react-native-paper'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Button, Divider, IconButton, Menu, Surface, TouchableRipple } from 'react-native-paper'
 import tw from 'twrnc'
 
 const Dropdown = () => {
@@ -23,15 +23,34 @@ const Dropdown = () => {
         />
 
       </TouchableOpacity>
-      <Menu
-        visible={opened}
-        onDismiss={closeMenu}
-        anchor={<Button onPress={openMenu}>Show menu</Button>}>
-        <Menu.Item onPress={() => { }} title="Item 1" />
-        <Menu.Item onPress={() => { }} title="Item 2" />
-        <Divider />
-        <Menu.Item onPress={() => { }} title="Item 3" />
-      </Menu>
+      <Surface style={styles.menu} >
+        <ScrollView style={{ maxHeight: 220 }}>
+          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
+            <Text>some text here</Text>
+          </TouchableRipple>
+          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
+            <Text>some text here</Text>
+          </TouchableRipple>
+          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
+            <Text>some text here</Text>
+          </TouchableRipple>
+          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
+            <Text>some text here</Text>
+          </TouchableRipple>
+          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
+            <Text>some text here</Text>
+          </TouchableRipple>
+          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
+            <Text>some text here</Text>
+          </TouchableRipple>
+          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
+            <Text>some text here</Text>
+          </TouchableRipple>
+          <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
+            <Text>some text here</Text>
+          </TouchableRipple>
+        </ScrollView>
+      </Surface>
     </View>
   )
 }
@@ -50,5 +69,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
+  },
+  menu: {
+    backgroundColor: '#fff',
+    position: 'absolute',
+    top: 85,
+    width: '94%',
+    marginHorizontal: '3%',
+    paddingVertical: 7,
+    borderRadius: 7,
+    zIndex: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    elevation: 5,
+  },
+  menuItem: {
+    padding: 15
   }
 })

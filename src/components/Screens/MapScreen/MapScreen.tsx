@@ -29,25 +29,27 @@ const MapScreen = () => {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<Topbar goBack={false} title="Map" subtitle="Find cool places here" />
-			{location && <MapView
-				style={{ flex: 1, width: '100%' }}
-				mapType="mutedStandard"
-				initialRegion={{
-					latitude: location.coords.latitude,
-					longitude: location.coords.longitude,
-					latitudeDelta: 0.0922,
-					longitudeDelta: 0.0421,
-				}}
-			>
-				{location && (
-					<Marker
-						coordinate={{
-							latitude: location.coords.latitude,
-							longitude: location.coords.longitude,
-						}}
-					/>
-				)}
-			</MapView>
+			{location ?
+				(<MapView
+					style={{ flex: 1, width: '100%' }}
+					mapType="mutedStandard"
+					initialRegion={{
+						latitude: location.coords.latitude,
+						longitude: location.coords.longitude,
+						latitudeDelta: 0.0922,
+						longitudeDelta: 0.0421,
+					}}
+				>
+					{location && (
+						<Marker
+							coordinate={{
+								latitude: location.coords.latitude,
+								longitude: location.coords.longitude,
+							}}
+						/>
+					)}
+				</MapView>)
+				: <Text>{errorMsg}</Text>
 			}
 
 		</SafeAreaView>

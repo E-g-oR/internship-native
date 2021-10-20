@@ -5,13 +5,19 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { observer } from "mobx-react";
 import { PostsStore } from "../../../store/store";
 import { useNavigation } from "@react-navigation/native";
+import { LocationRegion } from "expo-location";
 
+export interface IPostLocation {
+	latitude: number,
+	longtitude: number,
+}
 export interface IPost {
 	title: string,
 	body: string,
 	userId: number,
 	id: number,
-	isFavorite: boolean
+	isFavorite: boolean,
+	location: IPostLocation,
 }
 
 const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, store }: { post: IPost, store: PostsStore }) => {
@@ -20,11 +26,13 @@ const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, sto
 		store.togglePost(post.id)
 	}
 
+	const navigateToPostInfo = () => {
+		navigation.navigate('Info', { post })
+	}
+
 	return (
 		<Card style={[styles.Post, post.isFavorite ? styles.favorite : null]} elevation={4}>
-			<TouchableRipple onPress={() => {
-				navigation.navigate('Info', { post })
-			}}>
+			<TouchableRipple onPress={navigateToPostInfo}>
 				<Card.Content>
 					<Title style={post.isFavorite ? styles.favoriteText : null}>{post.title}</Title>
 					<Paragraph style={post.isFavorite ? styles.favoriteText : null}>{post.body}</Paragraph>

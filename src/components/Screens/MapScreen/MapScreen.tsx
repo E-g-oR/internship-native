@@ -34,8 +34,8 @@ const MapScreen = () => {
 					style={{ flex: 1, width: '100%' }}
 					mapType="mutedStandard"
 					initialRegion={{
-						latitude: location.coords.latitude,
-						longitude: location.coords.longitude,
+						latitude: location.coords.latitude,  // from -90 to 90
+						longitude: location.coords.longitude, // from -180 to 180
 						latitudeDelta: 0.0922,
 						longitudeDelta: 0.0421,
 					}}
@@ -59,3 +59,5 @@ const MapScreen = () => {
 export default MapScreen
 
 const styles = StyleSheet.create({})
+
+

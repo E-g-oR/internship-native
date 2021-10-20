@@ -9,6 +9,8 @@ const CardDetails: React.FC<{ post: IPost }> = ({ post }) => {
 		<View style={styles.CardDetails} >
 			<Title>{post.title}</Title>
 			<Paragraph>{post.body}</Paragraph>
+			<Paragraph>{post.location.latitude.toString()}</Paragraph>
+			<Paragraph>{post.location.longtitude.toString()}</Paragraph>
 		</View>
 	)
 }

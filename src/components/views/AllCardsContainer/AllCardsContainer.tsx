@@ -16,7 +16,13 @@ const AllCardsContainer: React.FC<{ store: PostsStore }> = observer(({ store }) 
 	return (
 		<Surface>
 			<View style={styles.AllCardsContainer}>
-
+				<View>
+					{store.countriesList.length ?
+						store.countriesList.map(countryName =>
+							<Text key={countryName}>{countryName}</Text>)
+						: <ActivityIndicator />
+					}
+				</View>
 				<ScrollView>
 					{store.allPosts.length ?
 						store.allPosts.map(post =>

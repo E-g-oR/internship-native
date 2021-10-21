@@ -21,7 +21,7 @@ const AllCardsContainer: React.FC<{ store: PostsStore }> = observer(({ store }) 
 	}, [store.allPosts, store.countryFilter]);
 
 	return (
-		<Surface>
+		<Surface style={{ flex: 1, height: '100%' }}>
 			<Dropdown store={store} />
 			<View style={styles.AllCardsContainer}>
 				<ScrollView>
@@ -41,10 +41,9 @@ export default AllCardsContainer
 
 const styles = StyleSheet.create({
 	AllCardsContainer: {
-		width: '94%',
-		marginHorizontal: '3%',
-		borderColor: '#ef5350',
-		borderWidth: 2,
+		width: '90%',
+		marginHorizontal: '5%',
+		// borderWidth: 2,
 		paddingVertical: 7
 	}
 });

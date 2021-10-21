@@ -8,7 +8,7 @@ export default function Topbar({ goBack, title, subtitle }: { goBack: boolean, t
   const navigation = useNavigation()
   return (
     <View>
-      <Appbar.Header >
+      <Appbar.Header dark={true} >
         {goBack && <Appbar.BackAction onPress={() => { navigation.goBack() }} />}
         <Appbar.Content title={title} subtitle={subtitle} />
         <Appbar.Action icon="magnify" />

@@ -60,7 +60,7 @@ export default Post
 const styles = StyleSheet.create({
 	Post: {
 		marginBottom: 10,
-		marginHorizontal: 10
+		marginHorizontal: '1%'
 	},
 	favorite: {
 		backgroundColor: '#ffecb3',

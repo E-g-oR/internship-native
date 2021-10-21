@@ -22,6 +22,7 @@ const Info = ({ route, navigation }: Props) => {
         <View style={{ marginHorizontal: '4%' }}>
           <Title>{route.params.post.title}</Title>
           <Paragraph>{route.params.post.body}</Paragraph>
+          <Paragraph>{route.params.post.country}</Paragraph>
           <Paragraph>{route.params.post.location.latitude}</Paragraph>
           <Paragraph>{route.params.post.location.longtitude}</Paragraph>
           <Button onPress={seeOnMap} >See on map</Button>
@@ -46,7 +47,7 @@ const Info = ({ route, navigation }: Props) => {
               />
             )}
           </MapView>)
-          : <Text>some text</Text>
+          : <Paragraph>{route.params.post.country}</Paragraph>
         }
       </Surface>
     </>

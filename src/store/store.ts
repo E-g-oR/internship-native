@@ -36,16 +36,22 @@ const REQUEST_START = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 const ACCESS_TOKEN =
   "pk.eyJ1IjoieWFoMHIiLCJhIjoiY2t1emdqNmgwMDdsbjMxbHAzamxrN2R2bCJ9.u0fF9NCV_0EfwdxoE05peQ";
 
-const decodeLocation = async (location: IPostLocation) => {
-  const response = await fetch(
+const sendRequest = async (url: string) => {
+  const response = await fetch(url);
+  const data = response.json();
+  return data;
+};
+
+const decodeLocation = (location: IPostLocation) => {
+  const data = sendRequest(
     `${REQUEST_START}${location.latitude},${location.longtitude}.json?access_token=${ACCESS_TOKEN}`
   );
-  const data: IDecoded = await response.json();
-
-  if (data.features.length) {
-    const lastItemIndex = data.features.length - 1;
-    return data.features[lastItemIndex].place_name;
-  }
+  data.then((decoded: IDecoded) => {
+    if (decoded.features.length) {
+      const lastItemIndex = decoded.features.length - 1;
+      return decoded.features[lastItemIndex].place_name;
+    }
+  });
 };
 
 const getRandomLocation = (): IPostLocation => {
@@ -63,34 +69,24 @@ export class PostsStore {
   allPosts: IPost[] = [];
   addedPosts: IPost[] = [];
   countriesList: string[] = [];
+  countryFilter: string = "All";
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  getPosts() {
-    //  AIzaSyCCS_zfWAq0zGe86kCqaS3Sx4FgVak53zg
-    // pk.eyJ1IjoieWFoMHIiLCJhIjoiY2t1emdqNmgwMDdsbjMxbHAzamxrN2R2bCJ9.u0fF9NCV_0EfwdxoE05peQ
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((resp) => resp.json())
-      .then((data: IPost[]) => {
-        data.map((post: IPost) => {
-          const location = getRandomLocation();
-          post.location = location;
-          const country = decodeLocation(location);
-          country.then((countryName) => {
-            if (countryName) {
-              const index = this.countriesList.findIndex(
-                (item) => item === countryName
-              );
-              if (index === -1) {
-                this.countriesList.push(countryName);
-              }
-            }
-          });
-        });
-        this.putPosts(data);
-      });
+  async getPosts() {
+    const allPosts: IPost[] = await sendRequest(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
+
+    allPosts.map((post: IPost) => {
+      const location = getRandomLocation();
+      post.location = location;
+    });
+
+    this.putPosts(allPosts);
+    this.getCountryNames();
 
     storage
       .load({
@@ -136,6 +132,45 @@ export class PostsStore {
       data: this.addedPosts,
       expires: 50000,
     });
+  }
+
+  setCountryFilter(countryName: string) {
+    this.countryFilter = countryName;
+  }
+
+  getCountryNames() {
+    if (this.allPosts.length) {
+      this.allPosts.map(async (post) => {
+        const data: IDecoded = await sendRequest(
+          `${REQUEST_START}${post.location.longtitude},${post.location.latitude}.json?access_token=${ACCESS_TOKEN}`
+        );
+        const features = data.features;
+        if (features.length) {
+          const lastIndex = features.length - 1;
+          const country = features[lastIndex].place_name;
+          post.country = country;
+          this.putCountryToList(country);
+        }
+      });
+    }
+  }
+
+  putCountryToList(country: string) {
+    const index = this.countriesList.findIndex((item) => item === country);
+    if (index === -1) {
+      this.countriesList.push(country);
+    }
+  }
+
+  getFilteredData(): IPost[] {
+    if (this.countryFilter === "All") {
+      return this.allPosts;
+    } else {
+      const filtered = this.allPosts.filter(
+        (post) => post.country === this.countryFilter
+      );
+      return filtered;
+    }
   }
 }
 

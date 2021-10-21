@@ -18,6 +18,7 @@ export interface IPost {
 	id: number,
 	isFavorite: boolean,
 	location: IPostLocation,
+	country: string | undefined,
 }
 
 const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, store }: { post: IPost, store: PostsStore }) => {
@@ -36,6 +37,7 @@ const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, sto
 				<Card.Content>
 					<Title style={post.isFavorite ? styles.favoriteText : null}>{post.title}</Title>
 					<Paragraph style={post.isFavorite ? styles.favoriteText : null}>{post.body}</Paragraph>
+					<Title >{post.country}</Title>
 				</Card.Content>
 			</TouchableRipple>
 			<Card.Actions>

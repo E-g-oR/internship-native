@@ -1,43 +1,53 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { Button, Divider, IconButton, Menu, Surface, TouchableRipple } from 'react-native-paper'
+import { Button, Divider, IconButton, List, Menu, Surface, TouchableRipple } from 'react-native-paper'
 import tw from 'twrnc'
 import { IStore, PostsStore } from '../../../store/store'
+import { observer } from 'mobx-react'
 
-const Dropdown: React.FC<{ store: PostsStore }> = ({ store }) => {
+const Dropdown: React.FC<{ store: PostsStore }> = observer(({ store }) => {
+
+  const initialValue = 'Please, select the country'
   const [opened, setOpened] = useState(false)
-  const [value, setValue] = useState('Please, select the country')
+  const [value, setValue] = useState(initialValue)
+
+  const selectCountry = (countryName: string) => {
+    setValue(countryName);
+    closeMenu();
+  }
+
   const closeMenu = () => {
     setOpened(false)
   }
+
   const openMenu = () => {
     setOpened(true)
   }
+
+  useEffect(() => {
+    if (value !== initialValue) {
+      store.setCountryFilter(value)
+    }
+    console.log(store.countryFilter);
+  }, [value])
+
   return (
     <View>
-      <TouchableOpacity style={styles.dropdown}>
-        <Text>{value}</Text>
-        <IconButton
-          size={20}
-          icon="chevron-down"
-          onPress={() => { console.log('press') }}
-        />
-
-      </TouchableOpacity>
       <Surface style={styles.menu} >
         <ScrollView style={{ maxHeight: 220 }}>
-          {store.countriesList.length && (store.countriesList.map(country => (
-            <TouchableRipple style={styles.menuItem} onPress={() => closeMenu()} >
-              <Text>{country}</Text>
-            </TouchableRipple>)
-          )
-          )}
+          {store.countriesList.length ? (<List.Accordion expanded={opened} onPress={openMenu}
+            title={value}
+          >
+            <List.Item title="All" onPress={() => { selectCountry("All") }} />
+            {store.countriesList.map(country => <List.Item key={country} title={country} onPress={() => { selectCountry(country) }} />)}
+          </List.Accordion>) : null}
+
         </ScrollView>
       </Surface>
     </View>
   )
-}
+})
 
 export default Dropdown
 
@@ -56,10 +66,11 @@ const styles = StyleSheet.create({
   },
   menu: {
     backgroundColor: '#fff',
-    position: 'absolute',
-    top: 85,
+    // position: 'absolute',
+    // top: 85,
     width: '94%',
     marginHorizontal: '3%',
+    marginVertical: 10,
     paddingVertical: 7,
     borderRadius: 7,
     zIndex: 10,

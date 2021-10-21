@@ -124,6 +124,8 @@ export class PostsStore {
   }
 
   addNewPost(newPost: IPost) {
+    const location = getRandomLocation();
+    newPost.location = location;
     this.allPosts.unshift(newPost);
     this.addedPosts.unshift(newPost);
     storage.save({

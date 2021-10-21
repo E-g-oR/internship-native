@@ -14,15 +14,11 @@ const Dropdown: React.FC<{ store: PostsStore }> = observer(({ store }) => {
 
   const selectCountry = (countryName: string) => {
     setValue(countryName);
-    closeMenu();
+    toggleMenu();
   }
 
-  const closeMenu = () => {
-    setOpened(false)
-  }
-
-  const openMenu = () => {
-    setOpened(true)
+  const toggleMenu = () => {
+    setOpened(prev => !prev)
   }
 
   useEffect(() => {
@@ -34,17 +30,21 @@ const Dropdown: React.FC<{ store: PostsStore }> = observer(({ store }) => {
 
   return (
     <View>
-      <Surface style={styles.menu} >
-        <ScrollView style={{ maxHeight: 220 }}>
-          {store.countriesList.length ? (<List.Accordion expanded={opened} onPress={openMenu}
-            title={value}
-          >
-            <List.Item title="All" onPress={() => { selectCountry("All") }} />
-            {store.countriesList.map(country => <List.Item key={country} title={country} onPress={() => { selectCountry(country) }} />)}
-          </List.Accordion>) : null}
+      {store.countriesList.length
+        ? (
+          <Surface style={styles.menu} >
+            <ScrollView >
+              <List.Accordion expanded={opened} onPress={toggleMenu}
+                title={value}
+              >
+                <List.Item title="All" onPress={() => { selectCountry("All") }} />
+                {store.countriesList.map(country => <List.Item key={country} title={country} onPress={() => { selectCountry(country) }} />)}
+              </List.Accordion>
+            </ScrollView>
+          </Surface>)
+        : null}
 
-        </ScrollView>
-      </Surface>
+
     </View>
   )
 })

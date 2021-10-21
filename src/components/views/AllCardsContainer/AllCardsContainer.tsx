@@ -4,6 +4,7 @@ import { ActivityIndicator, Button, Surface } from "react-native-paper";
 import Post, { IPost } from "../../UI/Card/Card";
 import { observer } from 'mobx-react'
 import { IStore, PostsStore } from "../../../store/store";
+import Dropdown from "../../UI/Dropdown/Dropdown";
 
 const AllCardsContainer: React.FC<{ store: PostsStore }> = observer(({ store }) => {
 
@@ -21,6 +22,7 @@ const AllCardsContainer: React.FC<{ store: PostsStore }> = observer(({ store }) 
 
 	return (
 		<Surface>
+			<Dropdown store={store} />
 			<View style={styles.AllCardsContainer}>
 				<ScrollView>
 					{(posts.length) ?
@@ -39,7 +41,7 @@ export default AllCardsContainer
 
 const styles = StyleSheet.create({
 	AllCardsContainer: {
-		width: '96%',
+		width: '94%',
 		marginHorizontal: '3%',
 		borderColor: '#ef5350',
 		borderWidth: 2,

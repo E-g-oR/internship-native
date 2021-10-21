@@ -11,7 +11,7 @@ const Feed = ({ route, navigation }: Props) => {
   return (
     <>
       <Topbar goBack={false} title="All posts" subtitle="" />
-      <Dropdown store={store} />
+
       <ScrollView>
         <AllCardsContainer store={store} />
       </ScrollView>

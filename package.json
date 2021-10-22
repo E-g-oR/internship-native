@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest"
   },
   "dependencies": {
     "@expo/ngrok": "^4.1.0",
@@ -38,11 +39,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/preset-typescript": "^7.15.0",
     "@types/jest": "^27.0.2",
     "@types/react": "^17.0.27",
     "@types/react-native": "^0.65.5",
     "@types/react-test-renderer": "^17.0.1",
+    "jest": "^27.3.1",
     "typescript": "^4.4.3"
+  },
+  "jshintConfig": {
+    "esversion": 6
   },
   "private": true
 }

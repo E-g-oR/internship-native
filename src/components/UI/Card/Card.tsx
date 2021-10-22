@@ -1,39 +1,19 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Card, Button, Paragraph, Title, TouchableRipple } from "react-native-paper";
-import { MaterialIcons } from '@expo/vector-icons';
 import { observer } from "mobx-react";
 import { PostsStore } from "../../../store/store";
-import { useNavigation } from "@react-navigation/native";
-import { LocationRegion } from "expo-location";
+import CardLogic, { IPost } from "./CardLogic";
 
-export interface IPostLocation {
-	latitude: number,
-	longtitude: number,
-}
-export interface IPost {
-	title: string,
-	body: string,
-	userId: number,
-	id: number,
-	isFavorite: boolean,
-	location: IPostLocation,
-	country: string | undefined,
-}
+// type Props = NativeStackScreenProps<RootStackParamList, 'Info'>;
 
-const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, store }: { post: IPost, store: PostsStore }) => {
-	const navigation = useNavigation()
-	const togglePost = (): void => {
-		store.togglePost(post.id)
-	}
 
-	const navigateToPostInfo = () => {
-		navigation.navigate('Info', { post })
-	}
+const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, store }) => {
 
+	const { navigateToPostInfo, togglePost } = CardLogic();
 	return (
 		<Card style={[styles.Post, post.isFavorite ? styles.favorite : null]} elevation={4}>
-			<TouchableRipple onPress={navigateToPostInfo}>
+			<TouchableRipple onPress={() => { navigateToPostInfo(post) }}>
 				<Card.Content>
 					<Title style={post.isFavorite ? styles.favoriteText : null}>{post.title}</Title>
 					<Paragraph style={post.isFavorite ? styles.favoriteText : null}>{post.body}</Paragraph>
@@ -43,7 +23,7 @@ const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, sto
 			<Card.Actions>
 
 				<Button
-					onPress={togglePost}
+					onPress={() => { togglePost(store, post.id) }}
 					icon={post.isFavorite ? "heart" : "heart-outline"}
 					mode="outlined"
 				>

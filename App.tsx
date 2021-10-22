@@ -20,7 +20,6 @@ const App: React.FC = () => {
     <Provider>
       <Surface style={{ height: '100%' }} >
         <NavigationContainer>
-          {/* <Navigate /> */}
           <FAB onPress={showForm} style={styles.fab} icon="plus" />
           <MyTabs />
 
@@ -39,13 +38,12 @@ const styles = StyleSheet.create({
   },
   container: {
     width: "90%",
-    // borderWidth: 2,
   },
   fab: {
     position: 'absolute',
     margin: 16,
     marginBottom: 70,
-    right: 0,
+    right: "5%",
     bottom: 0,
     zIndex: 20
   },

@@ -4,15 +4,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import HomeScreen from "../components/Screens/Home/Home";
 import FavoritesScreen from "../components/Screens/Favorites/Favorites";
-import { IPost } from "../components/UI/Card/Card";
+import { IPost } from "../components/UI/Card/CardLogic";
 import MapScreen from "../components/Screens/MapScreen/MapScreen";
 
 export type RootStackParamList = {
   Home: undefined,
-  Favorites: undefined,
-  Info: { post: IPost },
   Feed: undefined,
-  MapScreen: undefined,
+  Info: { post: IPost },
+  Favorites: undefined,
+  Map: undefined,
 }
 
 const Tab = createMaterialBottomTabNavigator<RootStackParamList>()

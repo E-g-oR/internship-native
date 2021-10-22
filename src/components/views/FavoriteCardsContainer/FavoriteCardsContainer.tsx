@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { Surface } from "react-native-paper";
 import { PostsStore } from "../../../store/store";
-import Post, { IPost } from "../../UI/Card/Card";
+import Post from "../../UI/Card/Card";
 
 const FavoriteCardsContainer: React.FC<{ store: PostsStore }> = observer(({ store }) => {
 	return (

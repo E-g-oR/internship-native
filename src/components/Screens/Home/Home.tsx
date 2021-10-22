@@ -3,8 +3,6 @@ import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navig
 import Feed from "./Feed";
 import Info from "./Info";
 import { Surface } from "react-native-paper";
-import { View } from "react-native";
-import Topbar from "../../UI/Topbar/Topbar";
 import { RootStackParamList } from "../../../navigation/TabNavigation";
 
 const Stack = createNativeStackNavigator()

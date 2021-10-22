@@ -1,31 +1,33 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { Button, Paragraph, Surface, Text, Title } from "react-native-paper";
 import { RootStackParamList } from "../../../navigation/TabNavigation";
-import { IPostLocation } from "../../UI/Card/Card";
+import { IPostLocation } from "../../UI/Card/CardLogic";
 import Topbar from "../../UI/Topbar/Topbar";
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Info'>
-const Info = ({ route, navigation }: Props) => {
+export type InfoScreenProps = NativeStackScreenProps<RootStackParamList, 'Info'>
+
+const Info = ({ route, navigation }: InfoScreenProps) => {
+
+  const post = route.params.post;
+
   const [location, setLocation] = useState<IPostLocation | null>(null)
 
-  const seeOnMap = () => {
-    setLocation(route.params.post.location)
-  }
+  const seeOnMap = () => { !location ? setLocation(post.location) : setLocation(null) }
 
   return (
     <>
-      <Topbar goBack={true} title="About" subtitle={route.params.post.title} />
+      <Topbar goBack={true} title="About" subtitle={post.title} />
       <Surface style={{ height: '100%' }}>
-        <View style={{ marginHorizontal: '5%' }}>
-          <Title>{route.params.post.title}</Title>
-          <Paragraph>{route.params.post.body}</Paragraph>
-          <Title>{route.params.post.country}</Title>
-          <Paragraph>{route.params.post.location.latitude}</Paragraph>
-          <Paragraph>{route.params.post.location.longtitude}</Paragraph>
-          <Button onPress={seeOnMap} >See on map</Button>
+        <View style={{ marginHorizontal: '5%', marginVertical: 15 }}>
+          <Title>{post.title}</Title>
+          <Paragraph>{post.body}</Paragraph>
+          <Title>{post.country}</Title>
+          <Paragraph>{post.location.latitude}</Paragraph>
+          <Paragraph>{post.location.longtitude}</Paragraph>
+          <Button mode="outlined" onPress={seeOnMap} >See on map</Button>
         </View>
         {location ?
           (<MapView
@@ -47,7 +49,7 @@ const Info = ({ route, navigation }: Props) => {
               />
             )}
           </MapView>)
-          : <Paragraph>{route.params.post.country}</Paragraph>
+          : null
         }
       </Surface>
     </>

@@ -1,14 +1,6 @@
-import { IPost, IPostLocation } from "../components/UI/Card/Card";
+import { IPost, IPostLocation } from "../components/UI/Card/CardLogic";
 import { makeAutoObservable } from "mobx";
 import storage from "./localStorage";
-
-export interface IStore {
-  allPosts: IPost[];
-  getPosts: () => void;
-  putPosts: (data: IPost) => void;
-  togglePost: (id: number) => void;
-  addNewPost: (newPost: IPost) => void;
-}
 
 interface IDecodedFeatures {
   address?: string;
@@ -36,7 +28,7 @@ const REQUEST_START = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 const ACCESS_TOKEN =
   "pk.eyJ1IjoieWFoMHIiLCJhIjoiY2t1emdqNmgwMDdsbjMxbHAzamxrN2R2bCJ9.u0fF9NCV_0EfwdxoE05peQ";
 
-export const sendRequest = async (url: string) => {
+const sendRequest = async (url: string) => {
   const response = await fetch(url);
   const data = response.json();
   return data;
@@ -141,7 +133,7 @@ export class PostsStore {
 
   getCountryNames() {
     if (this.allPosts.length) {
-      this.allPosts.map(async (post) => {
+      this.allPosts.map(async (post, index) => {
         const data: IDecoded = await sendRequest(
           `${REQUEST_START}${post.location.longtitude},${post.location.latitude}.json?access_token=${ACCESS_TOKEN}`
         );
@@ -149,11 +141,15 @@ export class PostsStore {
         if (features.length) {
           const lastIndex = features.length - 1;
           const country = features[lastIndex].place_name;
-          post.country = country;
+          this.setCountryName(index, country);
           this.putCountryToList(country);
         }
       });
     }
+  }
+
+  setCountryName(index: number, countryName: string) {
+    this.allPosts[index].country = countryName;
   }
 
   putCountryToList(country: string) {

@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 
 import { Appbar } from 'react-native-paper';
@@ -8,11 +8,11 @@ export default function Topbar({ goBack, title, subtitle }: { goBack: boolean, t
   const navigation = useNavigation()
   return (
     <View>
-      <Appbar.Header dark={true} >
-        {goBack && <Appbar.BackAction onPress={() => { navigation.goBack() }} />}
+      <Appbar.Header >
+        {goBack && <Appbar.BackAction testID="goback-button" onPress={() => { navigation.goBack() }} accessibilityLabel="back" />}
         <Appbar.Content title={title} subtitle={subtitle} />
-        <Appbar.Action icon="magnify" />
-        <Appbar.Action icon="dots-vertical" />
+        <Appbar.Action icon="magnify" testID="search-button" onPress={() => { console.log('Appbar search click') }} accessibilityLabel="search" />
+        <Appbar.Action icon="dots-vertical" testID="more-button" onPress={() => { console.log('Appbar dots click') }} accessibilityLabel="more" />
       </Appbar.Header>
     </View>
   );

@@ -3,12 +3,10 @@ import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navig
 import Feed from "./Feed";
 import Info from "./Info";
 import { Surface } from "react-native-paper";
-import { RootStackParamList } from "../../../navigation/TabNavigation";
 
 const Stack = createNativeStackNavigator()
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 
-const HomeScreen = ({ route, navigation }: Props) => {
+const HomeScreen = () => {
   return (
     <>
       <Surface style={{ height: '100%' }}>

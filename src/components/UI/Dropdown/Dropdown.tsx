@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
-import { Button, Divider, IconButton, List, Menu, Surface, TouchableRipple } from 'react-native-paper'
-import tw from 'twrnc'
-import { IStore, PostsStore } from '../../../store/store'
-import { observer } from 'mobx-react'
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { List, Surface } from 'react-native-paper';
+import { observer } from 'mobx-react';
+import { PostsStore } from '../../../store/store';
 
 const Dropdown: React.FC<{ store: PostsStore }> = observer(({ store }) => {
 
-  const initialValue = 'Please, select the country'
-  const [opened, setOpened] = useState(false)
-  const [value, setValue] = useState(initialValue)
+  const initialValue = 'Please, select the country';
+  const [opened, setOpened] = useState(false);
+  const [value, setValue] = useState(initialValue);
 
   const selectCountry = (countryName: string) => {
     setValue(countryName);
@@ -18,15 +16,15 @@ const Dropdown: React.FC<{ store: PostsStore }> = observer(({ store }) => {
   }
 
   const toggleMenu = () => {
-    setOpened(prev => !prev)
+    setOpened(prev => !prev);
   }
 
   useEffect(() => {
     if (value !== initialValue) {
-      store.setCountryFilter(value)
+      store.setCountryFilter(value);
     }
     console.log(store.countryFilter);
-  }, [value])
+  }, [value]);
 
   return (
     <View>
@@ -38,12 +36,11 @@ const Dropdown: React.FC<{ store: PostsStore }> = observer(({ store }) => {
                 title={value}
               >
                 <List.Item title="All" onPress={() => { selectCountry("All") }} />
-                {store.countriesList.map(country => <List.Item key={country} title={country} onPress={() => { selectCountry(country) }} />)}
+                {store.countriesList.map(country => <List.Item key={country} title={country} onPress={() => { selectCountry(country); }} />)}
               </List.Accordion>
             </ScrollView>
           </Surface>)
         : null}
-
 
     </View>
   )

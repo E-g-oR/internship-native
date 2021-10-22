@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { Button, Dialog, Paragraph, Portal, Provider, Text, TextInput, Title } from "react-native-paper";
 import { FormStore } from "../../../store/FormStore";
 import { decodeLocation, PostsStore } from "../../../store/store";
-import { IPost } from "../Card/Card";
+import { IPost } from "../Card/CardLogic";
 
 type FormData = {
   title: string,

@@ -36,22 +36,23 @@ const REQUEST_START = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 const ACCESS_TOKEN =
   "pk.eyJ1IjoieWFoMHIiLCJhIjoiY2t1emdqNmgwMDdsbjMxbHAzamxrN2R2bCJ9.u0fF9NCV_0EfwdxoE05peQ";
 
-const sendRequest = async (url: string) => {
+export const sendRequest = async (url: string) => {
   const response = await fetch(url);
   const data = response.json();
   return data;
 };
 
-const decodeLocation = (location: IPostLocation) => {
-  const data = sendRequest(
-    `${REQUEST_START}${location.latitude},${location.longtitude}.json?access_token=${ACCESS_TOKEN}`
+export const decodeLocation = async (location: IPostLocation) => {
+  let countryName = "";
+  const response: IDecoded = await sendRequest(
+    `${REQUEST_START}${location.longtitude},${location.latitude}.json?access_token=${ACCESS_TOKEN}`
   );
-  data.then((decoded: IDecoded) => {
-    if (decoded.features.length) {
-      const lastItemIndex = decoded.features.length - 1;
-      return decoded.features[lastItemIndex].place_name;
-    }
-  });
+  if (response.features.length) {
+    const lastIndex = response.features.length - 1;
+    countryName = response.features[lastIndex].place_name;
+  }
+
+  return countryName;
 };
 
 const getRandomLocation = (): IPostLocation => {
@@ -124,8 +125,6 @@ export class PostsStore {
   }
 
   addNewPost(newPost: IPost) {
-    const location = getRandomLocation();
-    newPost.location = location;
     this.allPosts.unshift(newPost);
     this.addedPosts.unshift(newPost);
     storage.save({

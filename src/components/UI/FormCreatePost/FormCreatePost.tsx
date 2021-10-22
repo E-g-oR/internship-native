@@ -4,28 +4,27 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 import { Button, Dialog, Paragraph, Portal, Provider, Text, TextInput, Title } from "react-native-paper";
 import { FormStore } from "../../../store/FormStore";
-import { PostsStore } from "../../../store/store";
+import { decodeLocation, PostsStore } from "../../../store/store";
 import { IPost } from "../Card/Card";
 
 type FormData = {
   title: string,
   body: string,
-  latitude: number,
-  longitude: number
+  latitude: string,
+  longitude: string,
 }
 
-const createPost = (formData: FormData): IPost => {
+const createPost = (formData: FormData, country: string): IPost => {
   const date = Date.now()
-  const country = 'any'
   const userId = 0
   return {
     title: formData.title,
     body: formData.body,
     location: {
-      latitude: formData.latitude,
-      longtitude: formData.longitude,
+      latitude: Number(formData.latitude),
+      longtitude: Number(formData.longitude),
     },
-    country: country,
+    country,
     id: date,
     userId: userId,
     isFavorite: false
@@ -38,53 +37,71 @@ const FormCreatePost: React.FC<{ storeForm: FormStore, store: PostsStore }> = ob
 
   const { control, handleSubmit, formState: { errors }, reset } = useForm();
 
-  const [errLatitude, seterrLatitude] = useState('')
-  const [errLongtitude, seterrLongtitude] = useState('')
+  const [errLatitude, seterrLatitude] = useState('');
+  const [errLongtitude, seterrLongtitude] = useState('');
+  const [CustomLocation, setCustomLocation] = useState('')
+  const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const closeForm = (): void => {
-    storeForm.toggleForm()
-    reset()
+    setIsButtonDisabled(true);
+    setCustomLocation('');
+    storeForm.toggleForm();
+    reset();
   }
 
   const validateCoordinates = (lat: any, long: any) => {
+    let errCount = 0;
     if (isNaN(lat)) {
-      seterrLatitude(' must be number')
-    } else seterrLatitude('')
+      errCount++;
+      seterrLatitude('Must be a number')
+    } else {
+      if (lat < -90 || lat > 90) {
+        errCount++;
+        seterrLatitude('Must be -90 <= latitude <= 90')
+      } else seterrLatitude('')
+    }
 
     if (isNaN(long)) {
-      seterrLongtitude(' must be number')
-    } else seterrLongtitude('')
-
-    if (!isNaN(lat) && !isNaN(long)) {
-
-      if (lat < -90 && lat > 90) {
-        seterrLatitude('Must be between -90 & 90')
-      } else seterrLatitude('')
-
-      if (long < -180 && long > 180) {
-        seterrLongtitude('Must be between -180 & 180')
+      errCount++;
+      seterrLongtitude('Must be a number')
+    } else {
+      if (long < -180 || long > 180) {
+        errCount++;
+        seterrLongtitude('Must be between -180 <= longitude <= 180')
       } else seterrLongtitude('')
-
-      if ((lat >= -90 && lat <= 90) && (long >= -180 && long <= 180)) {
-        return true
-      }
     }
+    console.log(errCount);
+    if (errCount === 0) {
+      return true
+    }
+
     return false
+  }
+
+  const checkLocation = async (data: FormData) => {
+    const isValid = validateCoordinates(data.latitude, data.longitude)
+    let location = '';
+    if (isValid) {
+      const countryName = await decodeLocation({ latitude: Number(data.latitude), longtitude: Number(data.longitude) })
+      console.log(countryName);
+
+      if (countryName) {
+        location = countryName
+        setIsButtonDisabled(false)
+      } else setIsButtonDisabled(true)
+    }
+    setCustomLocation(location)
+    return location
   }
 
   const submit = (data: FormData) => {
     const isValid = validateCoordinates(data.latitude, data.longitude)
-    if (!isValid) {
-      return
-    } else {
-      console.log(createPost(data));
-      store.addNewPost(createPost(data))
-      closeForm()
+    if (isValid) {
+      const newPost = createPost(data, CustomLocation);
+      store.addNewPost(newPost);
+      closeForm();
     }
-
   }
-
-
 
   return (
     <Provider>
@@ -163,11 +180,11 @@ const FormCreatePost: React.FC<{ storeForm: FormStore, store: PostsStore }> = ob
                 )}
               />
               <Text>{errLongtitude}</Text>
-              <Title>London, UK</Title>
-              <Button onPress={() => { }}>Check</Button>
+              <Title>{CustomLocation}</Title>
+              <Button mode="contained" onPress={handleSubmit(checkLocation)}>Check</Button>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button mode="contained" onPress={handleSubmit(submit)} >Add post</Button>
+              <Button disabled={IsButtonDisabled} mode="contained" onPress={handleSubmit(submit)} >Add post</Button>
               <Button mode="outlined" onPress={closeForm} >Cancel</Button>
             </Dialog.Actions>
           </Dialog>

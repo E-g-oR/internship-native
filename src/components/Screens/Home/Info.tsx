@@ -19,10 +19,10 @@ const Info = ({ route, navigation }: Props) => {
     <>
       <Topbar goBack={true} title="About" subtitle={route.params.post.title} />
       <Surface style={{ height: '100%' }}>
-        <View style={{ marginHorizontal: '4%' }}>
+        <View style={{ marginHorizontal: '5%' }}>
           <Title>{route.params.post.title}</Title>
           <Paragraph>{route.params.post.body}</Paragraph>
-          <Paragraph>{route.params.post.country}</Paragraph>
+          <Title>{route.params.post.country}</Title>
           <Paragraph>{route.params.post.location.latitude}</Paragraph>
           <Paragraph>{route.params.post.location.longtitude}</Paragraph>
           <Button onPress={seeOnMap} >See on map</Button>

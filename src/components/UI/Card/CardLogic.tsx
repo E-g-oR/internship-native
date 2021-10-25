@@ -1,9 +1,6 @@
-import React from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../navigation/TabNavigation';
+import React, { useState } from 'react';
 import { PostsStore } from '../../../store/store';
 import { useNavigation } from '@react-navigation/native';
-import { InfoScreenProps } from '../../Screens/Home/Info';
 
 export interface IPostLocation {
   latitude: number,
@@ -19,22 +16,25 @@ export interface IPost {
   country: string | undefined,
 }
 
-// type Props = NativeStackScreenProps<RootStackParamList, 'Info'>;
+function CardLogic(post: IPost) {
 
-function CardLogic() {
   const navigation = useNavigation();
-  // const navigation = props.navigation;
+  const { isFavorite } = post;
+
+  const Icon = isFavorite ? 'heart' : 'heart-outline';
+  const TextButton = isFavorite ? 'Remove' : 'Add to favorites';
+  const StylePost = isFavorite ? { backgroundColor: '#ffecb3' } : null;
+  const StyleText = isFavorite ? { color: '#000' } : null;
+
   const navigateToPostInfo = (post: IPost) => {
     navigation.navigate('Info', { post });
-
   }
 
   const togglePost = (store: PostsStore, id: number): void => {
     store.togglePost(id);
   }
 
-
-  return { togglePost, navigateToPostInfo }
+  return { togglePost, navigateToPostInfo, Icon, TextButton, StylePost, StyleText }
 }
 
 export default CardLogic;

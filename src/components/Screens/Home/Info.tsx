@@ -1,10 +1,10 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { Button, Paragraph, Surface, Text, Title } from "react-native-paper";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../navigation/TabNavigation";
 import { IPostLocation } from "../../UI/Card/CardLogic";
+import { View } from "react-native";
+import { Button, Paragraph, Surface, Text, Title } from "react-native-paper";
 import Topbar from "../../UI/Topbar/Topbar";
 
 export type InfoScreenProps = NativeStackScreenProps<RootStackParamList, 'Info'>

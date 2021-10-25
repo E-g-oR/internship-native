@@ -1,8 +1,8 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
 import store from "../../../store/store";
-import Topbar from "../../UI/Topbar/Topbar";
+import { ScrollView } from "react-native";
 import FavoriteCardsContainer from "../../views/FavoriteCardsContainer/FavoriteCardsContainer";
+import Topbar from "../../UI/Topbar/Topbar";
 
 const FavoritesScreen = () => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
-import { ScrollView } from "react-native";
 import store from "../../../store/store";
+import { ScrollView } from "react-native";
 import AllCardsContainer from "../../views/AllCardsContainer/AllCardsContainer";
 import Topbar from "../../UI/Topbar/Topbar";
 

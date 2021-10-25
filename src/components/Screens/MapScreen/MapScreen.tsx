@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
-import Topbar from '../../UI/Topbar/Topbar'
-import * as Location from 'expo-location'
-import { LocationObject } from 'expo-location'
+import React, { useEffect, useState } from "react"
+import * as Location from "expo-location"
+import { LocationObject } from "expo-location"
+import MapView, { Marker } from "react-native-maps"
+import { SafeAreaView, StyleSheet, Text } from "react-native"
+import Topbar from "../../UI/Topbar/Topbar"
 
 
 
@@ -14,8 +14,8 @@ const MapScreen = () => {
 	useEffect(() => {
 		(async () => {
 			let { status } = await Location.requestForegroundPermissionsAsync();
-			if (status !== 'granted') {
-				setErrorMsg('Permission to access location was denied');
+			if (status !== "granted") {
+				setErrorMsg("Permission to access location was denied");
 				return;
 			}
 
@@ -31,7 +31,7 @@ const MapScreen = () => {
 			<Topbar goBack={false} title="Map" subtitle="Find cool places here" />
 			{location ?
 				(<MapView
-					style={{ flex: 1, width: '100%' }}
+					style={{ flex: 1, width: "100%" }}
 					mapType="mutedStandard"
 					initialRegion={{
 						latitude: location.coords.latitude,  // from -90 to 90

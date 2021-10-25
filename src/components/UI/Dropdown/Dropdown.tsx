@@ -1,30 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { List, Surface } from 'react-native-paper';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { PostsStore } from '../../../store/store';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { List, Surface } from 'react-native-paper';
+import DropdownLogic from './DropdownLogic';
 
 const Dropdown: React.FC<{ store: PostsStore }> = observer(({ store }) => {
 
-  const initialValue = 'Please, select the country';
-  const [opened, setOpened] = useState(false);
-  const [value, setValue] = useState(initialValue);
-
-  const selectCountry = (countryName: string) => {
-    setValue(countryName);
-    toggleMenu();
-  }
-
-  const toggleMenu = () => {
-    setOpened(prev => !prev);
-  }
-
-  useEffect(() => {
-    if (value !== initialValue) {
-      store.setCountryFilter(value);
-    }
-    console.log(store.countryFilter);
-  }, [value]);
+  const { value, opened, selectCountry, toggleMenu } = DropdownLogic(store);
 
   return (
     <View>
@@ -41,7 +24,6 @@ const Dropdown: React.FC<{ store: PostsStore }> = observer(({ store }) => {
             </ScrollView>
           </Surface>)
         : null}
-
     </View>
   )
 })
@@ -63,8 +45,6 @@ const styles = StyleSheet.create({
   },
   menu: {
     backgroundColor: '#fff',
-    // position: 'absolute',
-    // top: 85,
     width: '90%',
     marginHorizontal: '5%',
     marginVertical: 10,

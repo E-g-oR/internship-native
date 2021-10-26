@@ -6,27 +6,18 @@ import { observer } from 'mobx-react'
 import { PostsStore } from "../../../store/store";
 import Dropdown from "../../UI/Dropdown/Dropdown";
 import { IPost } from "../../UI/Card/CardLogic";
+import AllCardsContainerLogic from "./AllCardsContainerLogic";
 
 const AllCardsContainer: React.FC<{ store: PostsStore }> = observer(({ store }) => {
 
-	const [posts, setPosts] = useState<IPost[]>([])
-
-	useEffect(() => {
-		if (!store.allPosts.length) {
-			store.getPosts();
-		}
-
-		const data: IPost[] = store.getFilteredData()
-		setPosts(data)
-
-	}, [store.allPosts, store.countryFilter]);
+	const posts: IPost[] | null = AllCardsContainerLogic(store);
 
 	return (
 		<Surface style={{ flex: 1, height: '100%' }}>
 			<Dropdown store={store} />
 			<View style={styles.AllCardsContainer}>
 				<ScrollView>
-					{(posts.length) ?
+					{(posts) ?
 						posts.map(post =>
 							<Post post={post} key={post.id} store={store} />)
 						: <ActivityIndicator />

@@ -4,16 +4,18 @@ import { PostsStore } from "../../../store/store";
 import CardLogic, { IPost } from "./CardLogic";
 import { StyleSheet } from "react-native";
 import { Card, Button, Paragraph, Title, TouchableRipple } from "react-native-paper";
+import { useNavigation } from "@react-navigation/core";
 
 
 const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, store }) => {
 
+	const navigation = useNavigation();
 	const { title, body, country } = post;
 	const { navigateToPostInfo, togglePost, Icon, StylePost, TextButton, StyleText } = CardLogic(post);
 
 	return (
 		<Card style={[styles.Post, StylePost]} elevation={4}>
-			<TouchableRipple onPress={() => { navigateToPostInfo(post) }}>
+			<TouchableRipple onPress={() => { navigateToPostInfo(navigation) }}>
 				<Card.Content>
 
 					<Title style={StyleText}>{title}</Title>
@@ -25,7 +27,7 @@ const Post: React.FC<{ post: IPost, store: PostsStore }> = observer(({ post, sto
 			<Card.Actions>
 
 				<Button
-					onPress={() => { togglePost(store, post.id) }}
+					onPress={() => { togglePost(store) }}
 					icon={Icon}
 					mode="outlined"
 				>

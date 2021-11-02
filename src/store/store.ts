@@ -27,6 +27,10 @@ interface IDecoded {
 const REQUEST_START = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 const ACCESS_TOKEN =
   "pk.eyJ1IjoieWFoMHIiLCJhIjoiY2t1emdqNmgwMDdsbjMxbHAzamxrN2R2bCJ9.u0fF9NCV_0EfwdxoE05peQ";
+const LAT_MIN = -90;
+const LAT_MAX = 90;
+const LONG_MIN = -180;
+const LONG_MAX = 180;
 
 const sendRequest = async (url: string) => {
   const response = await fetch(url);
@@ -48,11 +52,6 @@ export const decodeLocation = async (location: IPostLocation) => {
 };
 
 const getRandomLocation = (): IPostLocation => {
-  const LAT_MIN = -90;
-  const LAT_MAX = 90;
-  const LONG_MIN = -180;
-  const LONG_MAX = 180;
-
   const latitude = Math.random() * (LAT_MAX - LAT_MIN) + LAT_MIN;
   const longtitude = Math.random() * (LONG_MAX - LONG_MIN) + LONG_MIN;
   return { latitude, longtitude };
